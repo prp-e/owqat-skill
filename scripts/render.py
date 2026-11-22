@@ -26,32 +26,37 @@ def localized(fields, language):
 def render(data, template):
     values = {
         f"{field}_{language}": localized(data.get(field, {}), language)
-        for field in ("city", "solar", "gregorian", "lunar", "note")
+        for field in ("city", "solar", "gregorian", "lunar")
         for language in ("fa", "en")
     }
-    rows = []
+    rows = {"fa": [], "en": []}
     for event, (fa, en) in EVENTS.items():
         time = data["times"].get(event) or "—"
         if time == "—" and event in {"asr", "isha", "midnight"}:
             continue
         if time != "—" and not re.fullmatch(r"(?:[01][0-9]|2[0-3]):[0-5][0-9]", time):
             raise ValueError(f"{event} requires a local time in HH:MM format")
-        row_class = ' class="solar"' if event in {"sunrise", "sunset"} else ""
-        rows.append(
-            f'<tr{row_class}><th scope="row">{fa}<span class="en" lang="en">{en}</span></th>'
-            f'<td><bdi dir="ltr">{time.translate(DIGITS)}</bdi>'
-            f'<span class="en" lang="en">{time}</span></td></tr>'
-        )
-    sources = []
+        tile_class = "tile solar" if event in {"sunrise", "sunset"} else "tile"
+        for language, label in (("fa", fa), ("en", en)):
+            digits = time.translate(DIGITS) if language == "fa" else time
+            rows[language].append(
+                f'<div class="{tile_class}"><dt>{label}</dt>'
+                f'<dd dir="ltr">{digits}</dd></div>'
+            )
+    sources = {"fa": [], "en": []}
     for source in data["sources"]:
         url = urlsplit(source["url"])
         if url.scheme not in {"http", "https"} or not url.hostname:
             raise ValueError("Sources require HTTP or HTTPS URLs")
-        fa = localized(source["label"], "fa")
-        en = localized(source["label"], "en")
-        sources.append(f'<li><a href="{escape(url.geturl())}">{fa} · <bdi lang="en">{en}</bdi></a></li>')
-    values["rows"] = "\n".join(rows)
-    values["sources"] = "\n".join(sources)
+        href = escape(url.geturl())
+        for language in sources:
+            label = localized(source["label"], language)
+            sources[language].append(f'<li><a href="{href}">{label}</a></li>')
+    for language in rows:
+        values[f"events_{language}"] = "\n".join(rows[language])
+        values[f"sources_{language}"] = "\n".join(sources[language])
+        note = data.get("note", {}).get(language)
+        values[f"note_{language}"] = f"<p>{escape(note)}</p>" if note else ""
     return re.sub(r"\{\{(\w+)\}\}", lambda match: values[match[1]], template)
 
 

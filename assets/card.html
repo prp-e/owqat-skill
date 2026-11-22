@@ -1,52 +1,120 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{city_fa}} · {{city_en}} | Prayer times</title>
+<title>{{city_en}} | Prayer times · اوقات شرعی {{city_fa}}</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;color:#17342f;background:#e8f0eb;font:1rem/1.55 system-ui,Tahoma,sans-serif;padding:clamp(12px,4vw,48px)}
-main{max-width:760px;margin:auto;border-radius:24px;overflow:hidden;background:#fbfaf5;box-shadow:0 20px 65px #17342f24}
-header{padding:clamp(22px,5vw,44px);color:#fff9e8;background:radial-gradient(ellipse at 0% 0%,#397c6d,transparent 68%),#123b33;border-bottom:5px solid #e9b96b}
-h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.2;margin:.25em 0}
-h1 small{display:block;font-size:.48em;color:#f5d7a3;margin-top:.2em}
-p{margin:.35em 0}
-.dates{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;padding:0;margin:1.4em 0 0}
-.dates div{padding:10px;border:1px solid #ffffff45;border-radius:10px}
-dt{color:#f5d7a3;font-size:.84em}dd{margin:0}
-.en{display:block;unicode-bidi:isolate;direction:ltr;text-align:right}
-section,footer{padding:clamp(14px,4vw,32px)}
-section{padding-bottom:4px}
-table{border-collapse:collapse;width:100%}
-th,td{padding:.65em .55em;text-align:right;border-bottom:1px solid #dae4da}
-tbody th{font-weight:600}
-tbody .en{font-size:.83em;color:#43625b;font-weight:400}
-td{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:650}
-.solar{background:#f8ecd2}
-footer{font-size:.87em;color:#36564f}
-footer a{color:#175447;overflow-wrap:anywhere}
-footer ul{padding-inline-start:1.4em}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: clamp(12px, 5vw, 64px);
+  background: #eae6dc;
+  color: #182c28;
+  font: 1rem/1.55 system-ui, Tahoma, sans-serif;
+}
+main { max-width: 920px; margin: auto; display: grid; gap: clamp(20px, 4vw, 40px); }
+.card {
+  --ink: #102e28;
+  --glow: #28584c;
+  --gold: #edcb8c;
+  border: 1px solid #d0bf9e;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fcf8ef;
+  box-shadow: 0 14px 36px #352a1c20;
+}
+.card[dir="rtl"] { --ink: #252039; --glow: #504064; }
+header {
+  padding: clamp(20px, 5vw, 46px);
+  border-block-end: 3px solid #bf9957;
+  color: #fff8e8;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 28px, #ffffff09 28px 29px),
+    radial-gradient(ellipse at top, var(--glow), var(--ink) 75%);
+}
+header p { margin: 0; color: var(--gold); font-weight: 600; }
+h1, h2 {
+  margin: .12em 0 .55em;
+  font: 400 clamp(2rem, 6vw, 3.6rem)/1.2 Georgia, Tahoma, serif;
+  overflow-wrap: anywhere;
+}
+[lang="fa"] h2 { font-family: Tahoma, system-ui, sans-serif; font-weight: 700; }
+dl, dd { margin: 0; }
+.dates, .events { display: grid; gap: 10px; }
+.dates { grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); }
+.dates > div { padding: 10px 12px; border: 1px solid #f2d8a563; border-radius: 10px; }
+.dates dt { color: var(--gold); font-size: .78rem; }
+.dates dd { overflow-wrap: anywhere; }
+.events {
+  padding: clamp(14px, 4vw, 32px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr));
+}
+.tile {
+  display: grid;
+  align-content: space-between;
+  gap: 7px;
+  padding: 12px;
+  min-height: 92px;
+  border: 1px solid #e0d8ca;
+  border-radius: 13px;
+  background: #fffdf8;
+}
+.tile dt { font-size: .85rem; color: #3e514e; }
+.tile dd {
+  justify-self: start;
+  font-size: clamp(1.45rem, 4vw, 2.05rem);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.solar { background: #f7e5ba; border-color: #d6b576; }
+footer {
+  margin-inline: clamp(14px, 4vw, 32px);
+  padding-block: 12px 20px;
+  border-block-start: 1px solid #e0d8ca;
+  font-size: .85rem;
+  color: #46514d;
+}
+footer p { margin: 0 0 .5em; }
+footer ul { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; list-style: none; }
+footer a { color: #31594a; text-underline-offset: .18em; overflow-wrap: anywhere; }
 </style>
+</head>
+<body>
 <main>
-<header>
-<p>اوقات شرعی <span lang="en" class="en">Prayer times</span></p>
-<h1>{{city_fa}} <small lang="en" class="en">{{city_en}}</small></h1>
-<dl class="dates">
-<div><dt>شمسی · <bdi lang="en">Solar Hijri</bdi></dt><dd>{{solar_fa}}<span class="en" lang="en">{{solar_en}}</span></dd></div>
-<div><dt>میلادی · <bdi lang="en">Gregorian</bdi></dt><dd>{{gregorian_fa}}<span class="en" lang="en">{{gregorian_en}}</span></dd></div>
-<div><dt>قمری · <bdi lang="en">Lunar Hijri</bdi></dt><dd>{{lunar_fa}}<span class="en" lang="en">{{lunar_en}}</span></dd></div>
-</dl>
-</header>
-<section>
-<table>
-<thead><tr><th scope="col">رویداد <span class="en" lang="en">Event</span></th><th scope="col">وقت محلی <span class="en" lang="en">Local time</span></th></tr></thead>
-<tbody>{{rows}}</tbody>
-</table>
-</section>
-<footer>
-<p>{{note_fa}}<span class="en" lang="en">{{note_en}}</span></p>
-<p>منابع · <bdi lang="en">Sources</bdi></p>
-<ul>{{sources}}</ul>
-</footer>
+<article class="card" lang="en" dir="ltr" aria-labelledby="city-en">
+  <header>
+    <p>Prayer times · Local time</p>
+    <h1 id="city-en">{{city_en}}</h1>
+    <dl class="dates">
+      <div><dt>Gregorian</dt><dd>{{gregorian_en}}</dd></div>
+      <div><dt>Solar Hijri</dt><dd>{{solar_en}}</dd></div>
+      <div><dt>Lunar Hijri</dt><dd>{{lunar_en}}</dd></div>
+    </dl>
+  </header>
+  <dl class="events">{{events_en}}</dl>
+  <footer>
+    {{note_en}}
+    <ul aria-label="Sources">{{sources_en}}</ul>
+  </footer>
+</article>
+<article class="card" lang="fa" dir="rtl" aria-labelledby="city-fa">
+  <header>
+    <p>اوقات شرعی به وقت محلی</p>
+    <h2 id="city-fa">{{city_fa}}</h2>
+    <dl class="dates">
+      <div><dt>میلادی</dt><dd>{{gregorian_fa}}</dd></div>
+      <div><dt>شمسی</dt><dd>{{solar_fa}}</dd></div>
+      <div><dt>قمری</dt><dd>{{lunar_fa}}</dd></div>
+    </dl>
+  </header>
+  <dl class="events">{{events_fa}}</dl>
+  <footer>
+    {{note_fa}}
+    <ul aria-label="منابع">{{sources_fa}}</ul>
+  </footer>
+</article>
 </main>
+</body>
 </html>
