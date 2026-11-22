@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{city_fa}} · {{city_en}} | Prayer times</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;color:#17342f;background:#e8f0eb;font:1rem/1.55 system-ui,Tahoma,sans-serif;padding:clamp(12px,4vw,48px)}
+main{max-width:760px;margin:auto;border-radius:24px;overflow:hidden;background:#fbfaf5;box-shadow:0 20px 65px #17342f24}
+header{padding:clamp(22px,5vw,44px);color:#fff9e8;background:radial-gradient(ellipse at 0% 0%,#397c6d,transparent 68%),#123b33;border-bottom:5px solid #e9b96b}
+h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.2;margin:.25em 0}
+h1 small{display:block;font-size:.48em;color:#f5d7a3;margin-top:.2em}
+p{margin:.35em 0}
+.dates{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;padding:0;margin:1.4em 0 0}
+.dates div{padding:10px;border:1px solid #ffffff45;border-radius:10px}
+dt{color:#f5d7a3;font-size:.84em}dd{margin:0}
+.en{display:block;unicode-bidi:isolate;direction:ltr;text-align:right}
+section,footer{padding:clamp(14px,4vw,32px)}
+section{padding-bottom:4px}
+table{border-collapse:collapse;width:100%}
+th,td{padding:.65em .55em;text-align:right;border-bottom:1px solid #dae4da}
+tbody th{font-weight:600}
+tbody .en{font-size:.83em;color:#43625b;font-weight:400}
+td{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:650}
+.solar{background:#f8ecd2}
+footer{font-size:.87em;color:#36564f}
+footer a{color:#175447;overflow-wrap:anywhere}
+footer ul{padding-inline-start:1.4em}
+</style>
+<main>
+<header>
+<p>اوقات شرعی <span lang="en" class="en">Prayer times</span></p>
+<h1>{{city_fa}} <small lang="en" class="en">{{city_en}}</small></h1>
+<dl class="dates">
+<div><dt>شمسی · <bdi lang="en">Solar Hijri</bdi></dt><dd>{{solar_fa}}<span class="en" lang="en">{{solar_en}}</span></dd></div>
+<div><dt>میلادی · <bdi lang="en">Gregorian</bdi></dt><dd>{{gregorian_fa}}<span class="en" lang="en">{{gregorian_en}}</span></dd></div>
+<div><dt>قمری · <bdi lang="en">Lunar Hijri</bdi></dt><dd>{{lunar_fa}}<span class="en" lang="en">{{lunar_en}}</span></dd></div>
+</dl>
+</header>
+<section>
+<table>
+<thead><tr><th scope="col">رویداد <span class="en" lang="en">Event</span></th><th scope="col">وقت محلی <span class="en" lang="en">Local time</span></th></tr></thead>
+<tbody>{{rows}}</tbody>
+</table>
+</section>
+<footer>
+<p>{{note_fa}}<span class="en" lang="en">{{note_en}}</span></p>
+<p>منابع · <bdi lang="en">Sources</bdi></p>
+<ul>{{sources}}</ul>
+</footer>
+</main>
+</html>
